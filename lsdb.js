@@ -25,6 +25,36 @@ function split_snmpwalk_output(s) {
     return(lsdb);
 }
 
+function parseLsa(lsa) {
+    var link_state_type = getByte(lsa, 3);
+    var link_state_id = getInt(lsa, 4);
+    var advertising_rtr = getInt(lsa, 8);
+    var length = getShort(lsa, 18);
+    return link_state_type;
+}
+
+function parseRouterLsa(lsa) {
+    var number_of_links = getShort(lsa, 22);
+    
+}
+
+function getByte(buffer, offset) {
+    return getBytes(buffer, offset, 1);
+}
+
+function getShort(buffer, offset) {
+    return getBytes(buffer, offset, 2);
+}
+
+function getInt(buffer, offset) {
+    return getBytes(buffer, offset, 4);
+}
+
+function getBytes(buffer, offset, byteCount) {
+    return parseInt(buffer.substring(2 * offset, 2 * (offset + byteCount)), 16);
+}
+
+
 var input = `iso.3.6.1.2.1.14.4.1.8.0.0.0.0.1.192.168.1.1.192.168.1.1 = Hex-STRING: 00 00 22 01 C0 A8 01 01 C0 A8 01 01 80 00 04 98
 55 69 00 48 02 00 00 04 C0 A8 01 01 FF FF FF FF
 03 00 00 22 C0 A8 01 02 C0 A8 FE 01 01 00 1A 6D
@@ -57,4 +87,8 @@ iso.3.6.1.2.1.14.4.1.8.0.0.0.0.5.0.0.0.0.192.168.1.1 = Hex-STRING: 00 00 20 05 0
 70 7E 00 24 00 00 00 00 80 00 00 01 00 00 00 00
 00 00 00 01`;
 
-console.log(split_snmpwalk_output(input));
+var a = split_snmpwalk_output(input);
+console.log(a);
+for (var i = 0 ; i < a.length ; i++) {
+    console.log(parseLsa(a[i]));
+}
