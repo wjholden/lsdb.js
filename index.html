@@ -8,6 +8,8 @@
     <script>
       function updatePage() {
 
+      document.body.removeChild(document.body.lastElementChild);
+
       var viz = new Viz();
       var lsdb = split_snmpwalk_output(document.getElementById('inputArea').value);
       var g = "digraph {\n";
@@ -65,5 +67,7 @@
 	70 7E 00 24 00 00 00 00 80 00 00 01 00 00 00 00
 	00 00 00 01
       </textarea>
+    </div>
+    <div></div>
   </body>
 </html>
