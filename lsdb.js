@@ -32,7 +32,7 @@ function parseLsa(lsa) {
     case 2:
 	return parseNetworkLsa(lsa);
     default:
-	return null;
+	return "";
     }
 }
 
