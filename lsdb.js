@@ -1,3 +1,4 @@
+// This object controls whether the router/network LSAs are drawn or not.
 var lsdbConfig = {
     showRouterLsa: true,
     showNetworkLsa: true

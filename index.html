@@ -11,7 +11,7 @@
     var initialChildCount = 0;
     function updatePage() {
       var lsdb = split_snmpwalk_output(document.getElementById('inputArea').value);
-      var g = "digraph {\n rankdir=LR;\n remincross=true;\n";
+      var g = "digraph {\n rankdir=LR;\n";
       for (var i = 0; i < lsdb.length; i++) {
         g += parseLsa(lsdb[i]);
       }
@@ -48,7 +48,8 @@
 <body onload='initialChildCount = document.body.childElementCount; updatePage();'>
   <h1>lsdb.js</h1>
 
-  <p>A JavaScript program to render the link state database (LSDB) from an Open Shortest Path First (OSPF) network using GraphViz. See the <a href="https://github.com/wjholden/lsdb.js">GitHub</a> project page.</p>
+  <p>A JavaScript program to render the link state database (LSDB) from an Open Shortest Path First (OSPF) network using
+    GraphViz. See the <a href="https://github.com/wjholden/lsdb.js">GitHub</a> project page.</p>
 
   <p>
     Paste your <span style='font-family:monospace'>snmpwalk</span> output into the left text area. The resulting graph
@@ -59,8 +60,14 @@
         OSPF-MIB::ospfLsdbAdvertisement -m +OSPF-MIB</u></span> or (faster) <span
       style='font-family:monospace'><u>snmpwalk -v3 -l auth -u [USERNAME] -a
         SHA -A [AUTHPASS] -x AES -X [PRIVPASS] [TARGET] .1.3.6.1.2.1.14.4.1.8</u></span> to gather the LSDB.
-    </p>
-    <textarea id='inputArea' oninput='updatePage();' rows=10 cols=80>
+  </p>
+  <p><input type="checkbox" id="showRouterLsa" checked
+      onchange="lsdbConfig.showRouterLsa = document.getElementById('showRouterLsa').checked; updatePage();"><label
+      for="showRouterLsa">Show Router LSA</label></input>
+    <input type="checkbox" id="showNetworkLsa" checked
+      onchange="lsdbConfig.showNetworkLsa = document.getElementById('showNetworkLsa').checked; updatePage()"><label
+      for="showNetworkLsa">Show Network LSA</label></input></p>
+  <textarea id='inputArea' oninput='updatePage();' rows=10 cols=80>
 iso.3.6.1.2.1.14.4.1.8.0.0.0.0.1.192.168.1.1.192.168.1.1 = Hex-STRING: 00 00 22 01 C0 A8 01 01 C0 A8 01 01 80 00 04 98
 55 69 00 48 02 00 00 04 C0 A8 01 01 FF FF FF FF
 03 00 00 22 C0 A8 01 02 C0 A8 FE 01 01 00 1A 6D
@@ -94,7 +101,7 @@ iso.3.6.1.2.1.14.4.1.8.0.0.0.0.5.0.0.0.0.192.168.1.1 = Hex-STRING: 00 00 20 05 0
 00 00 00 01
       </textarea>
 
-    <textarea id='graphVizOutput' rows=10 cols=80 oninput='updateGraph();'></textarea>
+  <textarea id='graphVizOutput' rows=10 cols=80 oninput='updateGraph();'></textarea>
   <div></div>
 </body>
 
